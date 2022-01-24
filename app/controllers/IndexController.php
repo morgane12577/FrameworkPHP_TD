@@ -1,5 +1,6 @@
 <?php
 namespace controllers;
+use Ubiquity\attributes\items\router\Get;
 
 use Ubiquity\core\postinstall\Display;
 use Ubiquity\log\Logger;
@@ -33,4 +34,8 @@ class IndexController extends ControllerBase {
 			$this->forward(IndexController::class);
 		}
 	}
+
+	
+
+
 }
