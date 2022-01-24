@@ -1,6 +1,0 @@
-.project
-*.buildpath
-.settings/*
-doxygeneJquery
-doc/*
-.idea/
