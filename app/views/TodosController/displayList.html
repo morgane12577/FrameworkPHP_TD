@@ -10,8 +10,12 @@
     <input type="checkbox" >
 
     {{elm}}
+    <form action="{{path('todos.edit',[loop.index0])}}">
+        <input type="text" name = "elm" value ="{{elm}}">
+    </form>
+
     <a href="{{path('todos.delete',[loop.index0])}}">Delete</a>
-    <a href="{{path('todos.edit',[loop.index0])}}">Edit</a>
+
 
     <br>
     {% endfor %}
