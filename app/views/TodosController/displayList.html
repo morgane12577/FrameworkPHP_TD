@@ -1,0 +1,19 @@
+
+<div class="ui label"> {{title}}</div>
+<form action ="{{path('todos.add')}} " method="post">
+    <input type="text" name="elm" placeholder="Nouvel Element">
+</form>
+
+
+<div>
+    {% for elm in list %}
+    <input type="checkbox" >
+
+    {{elm}}
+    <a href="{{path('todos.delete',[loop.index0])}}">Delete</a>
+    <a href="{{path('todos.edit',[loop.index0])}}">Edit</a>
+
+    <br>
+    {% endfor %}
+</div>
+

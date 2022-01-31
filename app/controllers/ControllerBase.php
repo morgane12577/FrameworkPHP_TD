@@ -13,6 +13,8 @@ abstract class ControllerBase extends Controller {
 
 	protected $footerView = "@activeTheme/main/vFooter.html";
 
+
+
 	public function initialize() {
 		if (! URequest::isAjax()) {
 			$this->loadView($this->headerView);
