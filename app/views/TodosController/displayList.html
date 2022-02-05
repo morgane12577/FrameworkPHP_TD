@@ -7,17 +7,21 @@
 
 <div>
     {% for elm in list %}
-    <input type="checkbox" >
 
-    {{elm}}
-    <form action="{{path('todos.edit',[loop.index0])}}">
-        <input type="text" name = "elm" value ="{{elm}}">
+
+
+    <form action="{{path('todos.edit',[loop.index0])}}" method ="post">
+        <input type="checkbox" >  {{elm}}  <input type="text" name = "elm" value ="{{elm}}">
+
     </form>
-
     <a href="{{path('todos.delete',[loop.index0])}}">Delete</a>
 
 
     <br>
     {% endfor %}
+
+    <form action="{{path('todos.save')}}" method ="get">
+        <input type="Submit" value ="sauvegarder" >
+    </form>
 </div>
 

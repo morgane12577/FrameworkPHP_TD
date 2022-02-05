@@ -57,5 +57,6 @@ return array(
 			"maintenance",
 			"composer"
 			],
-	"style"=>""
+	"style"=>"",
+	"activeDb"=>"default"
 	);

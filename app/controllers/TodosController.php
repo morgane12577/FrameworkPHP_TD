@@ -3,6 +3,7 @@ namespace controllers;
  use Ubiquity\attributes\items\router\Get;
  use Ubiquity\attributes\items\router\Post;
  use Ubiquity\attributes\items\router\Route;
+ use Ubiquity\cache\CacheManager;
  use Ubiquity\utils\http\URequest;
  use Ubiquity\utils\http\USession;
 
@@ -55,7 +56,14 @@ class TodosController extends \controllers\ControllerBase{
     }
 
     #[Get('todos/loadlist/{uniqid}', name: 'todos.loadList')]
-    public function loadList($uniqid){
+    public function loadList($id){
+       if (CacheManager::$cache->exists(self::CACHE_KEY . $id)) {
+            $list = CacheManager::$cache->fetch(self::CACHE_KEY . $id);
+            $this->displayList($list);
+        }
+        else{
+            $this->showMessage('',"la liste n'existe pas");
+        }
 
     }
 
@@ -67,7 +75,7 @@ class TodosController extends \controllers\ControllerBase{
      #[Get('todos/new/{force}', name : 'todos.new')]
      public function newlist($force){
             if ($force == false){
-                echo "liste existe déjà et pas vide";
+                $this->showMessage('',"la liste existe déjà et pas vide");
             }
             else{
 
@@ -76,7 +84,11 @@ class TodosController extends \controllers\ControllerBase{
 
      #[Get('todos/saveList', name : 'todos.save')]
      public function saveList(){
-
+         $list = USession::get(self::LIST_SESSION_KEY,[]);
+         $id=uniqid('',true);
+         CacheManager::$cache->store(self::CACHE_KEY . $id, $list);
+         $this->showMessage('',"Liste Sauvegardée avec l'id =" .$id);
+         $this->showMessage('',"Acceder à la liste avec le lien http://127.0.0.1:8090/todos/loadlist/". $id);
      }
 
     private function showMessage(string $header, string $message, string $type = '', string $icon = 'info circle',array $buttons=[]) {
