@@ -1,17 +1,24 @@
 <?php
 namespace controllers;
+ use Ajax\JsUtils;
  use Ubiquity\attributes\items\router\Get;
  use Ubiquity\attributes\items\router\Post;
  use Ubiquity\attributes\items\router\Route;
  use Ubiquity\cache\CacheManager;
+ use Ubiquity\controllers\auth\AuthController;
+ use Ubiquity\controllers\auth\WithAuthTrait;
  use Ubiquity\utils\http\URequest;
  use Ubiquity\utils\http\USession;
 
  /**
   * Controller TodosController
+  * @property JsUtils $jquery
   */
  //#[Route('todos')]
 class TodosController extends \controllers\ControllerBase{
+
+    use WithAuthTrait;
+
 
     const CACHE_KEY = 'datas/lists/';
     const EMPTY_LIST_ID='not saved';
@@ -22,9 +29,15 @@ class TodosController extends \controllers\ControllerBase{
      #[Route('_default', name : 'home')]
 	public function index(){
 		$list = USession::get(self::LIST_SESSION_KEY,[]);
+        $this->loadView('TodosController/index.html');
         $this->displayList($list);
 
 	}
+
+    public function testJquery(){
+         $this->jquery->click('button',"$('.elm').toggle();");
+         $this->jquery->renderDefaultView();
+    }
 
     #[Post('todos/add', name : 'todos.add')]
     public function addElement(){
@@ -36,11 +49,11 @@ class TodosController extends \controllers\ControllerBase{
 
     }
 
-    #[Post('todos/delete/{index}', name : 'todos.delete')]
+    #[Get('todos/delete/{index}', name : 'todos.delete')]
     public function deleteElement($index){
         $list = USession::get(self::LIST_SESSION_KEY,[]);
         unset($list[$index]);
-        USession::set(self::LIST_SESSION_KEY, $list);
+        USession::set(self::LIST_SESSION_KEY, \array_values($list));
         $this->displayList($list);
 
 
@@ -55,7 +68,7 @@ class TodosController extends \controllers\ControllerBase{
         $this->displayList($list);
     }
 
-    #[Get('todos/loadlist/{uniqid}', name: 'todos.loadList')]
+    #[Get('todos/loadlist/{id}', name: 'todos.loadList')]
     public function loadList($id){
        if (CacheManager::$cache->exists(self::CACHE_KEY . $id)) {
             $list = CacheManager::$cache->fetch(self::CACHE_KEY . $id);
@@ -87,9 +100,23 @@ class TodosController extends \controllers\ControllerBase{
          $list = USession::get(self::LIST_SESSION_KEY,[]);
          $id=uniqid('',true);
          CacheManager::$cache->store(self::CACHE_KEY . $id, $list);
-         $this->showMessage('',"Liste Sauvegardée avec l'id =" .$id);
+         $this->jquery->semantic()->htmlInput(value: $id, identifier: 'elmText');
+         $this->showMessage(header:'',message:"Liste Sauvegardée avec l'id =" .$id, buttons: [$this->jquery->semantic()->htmlButton(identifier: 'bt',value: 'Copier')]);
+         $this->createCopyButton('bt','elmText');
          $this->showMessage('',"Acceder à la liste avec le lien http://127.0.0.1:8090/todos/loadlist/". $id);
+         $this->displayList($list);
      }
+
+    private function createCopyButton(string $bt,string $elmText){
+        $this->jquery->click($bt,'
+                    let tmp = $("<input>");
+                    $("body").append(tmp);
+                    tmp.val($("'.$elmText.'").text()).select();
+                    document.execCommand("copy");
+                    tmp.remove();
+                    $("'.$bt.'").popup({content: "Idenfifiant copié !"}).popup("show");
+    ');
+    }
 
     private function showMessage(string $header, string $message, string $type = '', string $icon = 'info circle',array $buttons=[]) {
         $this->loadView('main/message.html', compact('header', 'type', 'icon', 'message','buttons'));
@@ -100,4 +127,8 @@ class TodosController extends \controllers\ControllerBase{
     }
 
 
+    protected function getAuthController(): AuthController
+    {
+        return new MyAuth($this);
+    }
 }
