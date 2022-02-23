@@ -1,0 +1,22 @@
+{% extends "OrgaController/index.html" %}
+
+{% block body %}
+    {{orga}}
+
+Utilisateurs
+<ul>
+    {% for g in orga.users %}
+        <li>{{g}}</li>
+    {% endfor %}
+
+</ul>
+
+<ul>
+    {% for a in orga.groupes %}
+    <li>{{a}}</li>
+    {% endfor %}
+
+</ul>
+{% endblock %}
+
+

@@ -1,0 +1,12 @@
+{% extends "OrgaController/base.html" %}
+
+{% block menu %}
+    {{parent ()}}
+{% endblock %}
+{% block body %}
+<ul>
+    {% for orga in orgas %}
+    <li>{{orga.name}} <a href="{{path('orga.getOne',[orga.id])}}"></a> </li>
+    {% endfor %}
+</ul>
+{% endblock %}
