@@ -2,6 +2,20 @@
 <html>
 <head>
 {% block header %}
+
+	<div class="main-container">
+		<header>
+			<div class="ui container">
+				<div class="ui secondary inverted menu">
+					<a href="/" class="active item">Home</a>
+					<div class="item">{{ _self }}</div>
+					{{ _userInfo | raw }}
+				</div>
+			</div>
+		</header>
+		<main>
+			<div class="ui container">
+
 	<base href="{{config["siteUrl"]}}">
 	<meta charset="UTF-8">
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">
