@@ -4,6 +4,7 @@ namespace controllers;
   * Controller StoreController
   */
 
+ use Ajax\semantic\html\base\constants\Transition;
  use models\Product;
  use models\Section;
  use Ubiquity\attributes\items\router\Route;
@@ -59,6 +60,8 @@ public function getAllProduct()
         USession::set('cart',$cart);
         $this->count ++;
         $this->loadView('StoreController/addToCart.html', ['cart' => USession::get('cart',["nb"=>0,"montant"=>0])]);
+
+
 
 
     }

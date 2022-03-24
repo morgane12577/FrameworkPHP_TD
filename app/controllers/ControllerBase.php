@@ -3,6 +3,7 @@ namespace controllers;
 
 use Ubiquity\controllers\Controller;
 use Ubiquity\utils\http\URequest;
+use Ubiquity\utils\http\USession;
 
 /**
  * controllers$ControllerBase
@@ -15,7 +16,7 @@ abstract class ControllerBase extends Controller {
 
 	public function initialize() {
 		if (! URequest::isAjax()) {
-			$this->loadView($this->headerView);
+			$this->loadView($this->headerView, ['cart' => USession::get('cart',["nb"=>0,"montant"=>0])]);
 		}
 	}
 
