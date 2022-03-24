@@ -1,6 +1,9 @@
-<h1>
-    Panier : <br>
-    {{cart['nb']}} produits
-    <br>
-{{cart['montant']}} €
-</h1>
+<div class="ui labeled button" >
+    <div class="ui positive basic button">
+        <i class="cart icon"></i>
+        {{cart['nb']}}
+    </div>
+    <a class="ui basic green left pointing label" style="background-color: white">
+        {{cart['montant']}} €
+    </a>
+</div>

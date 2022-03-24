@@ -1,11 +1,26 @@
-<h1>Section </h1> </br>
-Panier : {{cart['nb']}} produits pour {{cart['montant']}}
-<br/>
-{{section.name}}
+<h1 style="color: #00b5ad">Section </h1> </br>
+
+<div class="ui labeled button" >
+    <div class="ui positive basic button">
+        <i class="cart icon"></i>
+        {{cart['nb']}}
+    </div>
+    <a class="ui basic green left pointing label" style="background-color: white">
+        {{cart['montant']}} €
+    </a>
+</div>
+
+<h4 style="color: grey">{{section.name}}</h4>
+
+<hr style="color: #00b5ad; height: 2px">
+
+<div class="ui cards">
 {% for i in section.products %}
-<div class="container" > <h1>{{i}}</h1>
+<div class="ui card" > <h1>{{i}}</h1>
  {{img('store/'~i.image~'.jpg', {class: ''})}}
     {{i.price}}
-    <div class="btn btn-primary"><a style="color: white" href="{{ path ('store.addToCart', [i.id, 1])}}">Add to cart</a> </div>
+    <hr>
+    <div class="ui positive button" > <i class="plus icon"></i> <a style="color: white" href="{{ path ('store.addToCart', [i.id, 1])}}">Add to cart</a> </div>
 </div>
 {% endfor %}
+</div>

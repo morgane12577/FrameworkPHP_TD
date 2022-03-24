@@ -1,16 +1,28 @@
-<h1>Tous les produits</h1>
-<h4>{{num}} Produits</h4>
+<h1 style="color: #00b5ad">Tous les produits</h1>
+<h4 style="color: grey">{{num}} Produits</h4>
 
-<h1 style="font-size: 20px">Panier : {{cart['nb']}} produits pour {{cart['montant']}}</h1>
+<div class="ui labeled button" >
+    <div class="ui positive basic button">
+        <i class="cart icon"></i>
+        {{cart['nb']}}
+    </div>
+    <a class="ui basic green left pointing label">
+        {{cart['montant']}} €
+    </a>
+</div>
 
+<hr style="color: #00b5ad; height: 2px">
 
+<div class="ui cards">
 {% for p in products %}
 <div class="ui card" >
 <h2>{{p}}</h2>
 {{img('store/'~p.image~'.jpg', {class: ''})}}
 {{p.price}}
-<a href="{{ path ('store.addToCart', [p.id, 1])}}">Add to cart</a>
+    <hr >
+    <div class="ui positive button" > <i class="plus icon"></i><a href="{{ path ('store.addToCart', [p.id, 1])}}">Add to cart</a></div>
 </div>
 
 {% endfor %}
+</div>
 
