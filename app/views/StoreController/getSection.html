@@ -1,4 +1,4 @@
 {% for i in section.products %}
     <h1>{{i}}</h1>
-    <a href="">Add to cart</a>
+    <a href="{{ path ('store.addToCart', [i.id, 1])}}">Add to cart</a>
 {% endfor %}

@@ -1,6 +1,6 @@
 
 {% block body %}
-<div style="width: 100% ; background-color: #00BB33; "><a href="{{ path('getSection') }}" style="color: white; " >Parcourir le store </a> </div>
+<div style="width: 100% ; background-color: #00BB33; "><a href="{{ path('StoreController/allProducts') }}" style="color: white; " >Parcourir le store </a> </div>
 
 {% for sec in sections %}
 <div style="flex-wrap: wrap">
