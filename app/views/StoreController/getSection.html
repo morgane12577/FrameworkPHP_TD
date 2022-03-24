@@ -3,6 +3,9 @@ Panier : {{cart['nb']}} produits pour {{cart['montant']}}
 <br/>
 {{section.name}}
 {% for i in section.products %}
-    <h1>{{i}}</h1>
-    <a href="{{ path ('store.addToCart', [i.id, 1])}}">Add to cart</a>
+<div class="container" > <h1>{{i}}</h1>
+ {{img('store/'~i.image~'.jpg', {class: ''})}}
+    {{i.price}}
+    <div class="btn btn-primary"><a style="color: white" href="{{ path ('store.addToCart', [i.id, 1])}}">Add to cart</a> </div>
+</div>
 {% endfor %}

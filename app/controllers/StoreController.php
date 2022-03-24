@@ -24,10 +24,11 @@ namespace controllers;
 
     }
 
-    #[Route(path:'_default', name: 'home')]
+    #[Route(path:'/_default', name: 'home')]
     public function index(){
         $sections = DAO::getAll(Section::class);
-        $this->loadView('StoreController/index.html',['sections'=>$sections] );
+        $num = DAO::count(Product::class);
+        $this->loadView('StoreController/index.html',['sections'=>$sections ,'num'=>$num] );
 		
 	}
 
@@ -35,14 +36,15 @@ namespace controllers;
     public function getSection(int $id){
         $section = DAO::getById(Section::class,$id);
         $num = DAO::count(Product::class);
-        $this->loadView('StoreController/getSection.html',['section'=>$section, 'cart' => USession::get('cart',["nb"=>0,"montant"=>0]),'num'=>$num]);
+        $this->loadView('StoreController/getSection.html',['section'=>$section, 'cart' => USession::get('cart',["nb"=>0,"montant"=>0])]);
     }
 
     #[Route (path: 'allProducts', name: 'store.allProducts')]
 public function getAllProduct()
     {
+        $num = DAO::count(Product::class);
         $products = DAO::getAll(Product::class);
-        $this->loadView('StoreController/getAllProduct.html',['products'=>$products, 'cart' => USession::get('cart',["nb"=>0,"montant"=>0])]);
+        $this->loadView('StoreController/getAllProduct.html',['products'=>$products,'num'=>$num, 'cart' => USession::get('cart',["nb"=>0,"montant"=>0])]);
 
 
     }
