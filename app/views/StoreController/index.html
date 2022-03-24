@@ -1,12 +1,12 @@
 
 {% block body %}
-<div style="width: 100% ; background-color: #00BB33; "><a href="{{ path('StoreController/allProducts') }}" style="color: white; " >Parcourir le store </a> </div>
+<div style="width: 100% ; background-color: #00BB33; "><a href="{{ path('store.allProducts') }}" style="color: white; " >Parcourir le store ( {{count}} )</a> </div>
 
 {% for sec in sections %}
 <div style="flex-wrap: wrap">
     <h1> {{sec}}</h1>
     <p>{{sec.description}}</p>
-    <a href="{{path('store.section,[sec.id]')}}"> Consulter Produits</a>
+    <a href="{{path('store.section',[sec.id])}}"> Consulter Produits</a>
 </div>
 
 {% endfor %}

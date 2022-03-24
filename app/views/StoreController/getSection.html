@@ -1,3 +1,7 @@
+<h1>Section </h1> </br>
+Panier : {{cart['nb']}} {{cart['montant']}}
+<br/>
+{{section.name}}
 {% for i in section.products %}
     <h1>{{i}}</h1>
     <a href="{{ path ('store.addToCart', [i.id, 1])}}">Add to cart</a>
