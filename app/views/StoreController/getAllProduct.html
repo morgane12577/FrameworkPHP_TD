@@ -8,9 +8,9 @@
 <div class="ui card" >
 <h2>{{p}}</h2>
 {{img('store/'~p.image~'.jpg', {class: ''})}}
-{{p.price}}
+{{p.price}} €
     <hr >
-    <div class="ui positive button" > <i class="plus icon"></i><a href="{{ path ('store.addToCart', [p.id, 1])}}">Add to cart</a></div>
+    <div class="ui positive button" > <i class="plus icon"></i><a style="color: white" href="{{ path ('store.addToCart', [p.id, 1])}}">Add to cart</a></div>
 </div>
 
 {% endfor %}
