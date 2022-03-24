@@ -35,14 +35,14 @@ namespace controllers;
     public function getSection(int $id){
         $section = DAO::getById(Section::class,$id);
         $num = DAO::count(Product::class);
-        $this->loadView('StoreController/getSection.html',['section'=>$section, 'cart' => USession::get('cart',["nb"=>0,"montant"=>0]),'count'=>$num]);
+        $this->loadView('StoreController/getSection.html',['section'=>$section, 'cart' => USession::get('cart',["nb"=>0,"montant"=>0]),'num'=>$num]);
     }
 
     #[Route (path: 'allProducts', name: 'store.allProducts')]
 public function getAllProduct()
     {
         $products = DAO::getAll(Product::class);
-        $this->loadView('StoreController/getAllProduct.html');
+        $this->loadView('StoreController/getAllProduct.html',['products'=>$products, 'cart' => USession::get('cart',["nb"=>0,"montant"=>0])]);
 
 
     }
@@ -51,7 +51,7 @@ public function getAllProduct()
     public function addToCart (int $id, int $count){
         $montant = DAO::getById(Product::class,$id);
         $cart = USession::get('cart',["nb"=>0,"montant"=>0]);
-        $cart[]=[$id, $count];
+        $cart[]=[$id => $count];
         $cart["nb"] ++;
         $cart["montant"] = $cart["montant"] + $montant->getPrice();
         USession::set('cart',$cart);

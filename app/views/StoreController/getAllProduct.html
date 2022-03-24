@@ -1,1 +1,8 @@
-<!--View associated to getAllProduct action of StoreController controller -->
+<h1>Tous les produits</h1>
+Panier : {{cart['nb']}} produits pour {{cart['montant']}}
+
+{% for p in products %}
+<h2>{{p}}</h2>
+<a href="{{ path ('store.addToCart', [p.id, 1])}}">Add to cart</a>
+{% endfor %}
+
